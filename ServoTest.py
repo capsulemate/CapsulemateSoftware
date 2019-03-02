@@ -14,7 +14,7 @@ kit = ServoKit(channels=16)
 ##kit.continuous_servo[2].throttle = 0
 ##kit.continuous_servo[3].throttle = 0
 
-def servoTest(int chID)
+def servoTest(chID):
     kit.servo[chID].angle = 0
     time.sleep(1)
     kit.servo[chID].angle = 45
