@@ -12,8 +12,8 @@ Control scripts to dispense pills and access prescription data
 
 Hardware Mapping:
 Servo Channels
-* Stirring  0 to 3
-* Cylinder  4 to 7
+* Stirring  0, 2, 4, 6
+* Cylinder  8 to 11
 
 
 GPIO
