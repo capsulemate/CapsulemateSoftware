@@ -1,5 +1,6 @@
+#-------------------------- LEGACY CODE 
+# we are using JSON not csv
 import csv
-#from crontab import CronTab
 
 # TODO: function to rotate the cylinder to the correct hole size
 def turn_cylinder(storage_container, medicine_name, hole_size):
@@ -24,7 +25,7 @@ def did_dispense(storage_container, photoresistor_number):
 def create_schedule(storage_container, dispense_time):
 	return True
 
-def main1():
+def main():
 	with open('template.txt') as csv_file:
 		csv_reader = csv.reader(csv_file, delimiter='|')
 		line_count = 0
@@ -45,10 +46,4 @@ def main1():
 				line_count += 1
 				total_medication += 1
 
-def main2():
-    	# all the code for polling
-    	return True
-
-
-main1()
-main2()
+main()
