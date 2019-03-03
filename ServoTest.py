@@ -27,7 +27,7 @@ def servoTest(chID):
     time.sleep(1)
     kit.servo[chID].angle = 110
     time.sleep(1)
-    kit.servo[chID].angle = 0
+##    kit.servo[chID].angle = 0
 
-servoTest(4)
-servoTest(5)
+##servoTest(8)
+servoTest(11)
