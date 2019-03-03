@@ -1,5 +1,0 @@
-Storage Container, Medicine, Size(Diameter), Number of Pills, TimeOfDayMilitaryTime, NumberofPillsPerDose
-1, Tylenol, 0, 100, 17:00, 1
-2, Advil, 00, 100, 15:00, 2
-3, Asprin, 2, 100, 2:00, 1
-4, Something, 2, 100, 2:00, 2

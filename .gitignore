@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Tyurina Things
+.vscode/settings.json
+.DS_Store
