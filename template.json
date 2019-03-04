@@ -1,11 +1,11 @@
 {
     "Medicine": [
         {
-            "StorageContainer": 1, 
+            "StorageContainer": 0, 
             "Name": "Tylenol", 
             "Size": "00",
             "NumPills":100, 
-            "DispenseTimes":["17:00"],
+            "DispenseTimes":["14:20"],
             "PillsPerDose": 1
         }, 
         {
@@ -14,7 +14,7 @@
             "Size": "0",
             "NumPills":100, 
             "DispenseTimes":[
-                                "17:30",
+                                "14:20",
                                 "21:30"
                             ],
             "PillsPerDose": 1
@@ -32,7 +32,7 @@
             "PillsPerDose": 1
         },
         {
-            "StorageContainer": 4, 
+            "StorageContainer": 1, 
             "Name": "Something", 
             "Size": "4",
             "NumPills":100, 

@@ -1,11 +1,13 @@
 import schedule
 import time
-import parse_json as parse_json
+import loading
+import piConfig
 
-def main2():
-    parse_json.main1()
+def main():
+    loading.load_pills()
+    piConfig.init_sensors()
     while True:
       schedule.run_pending()
       time.sleep(1)
 
-main2()
+main()
