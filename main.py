@@ -1,11 +1,11 @@
 import schedule
 import time
-import parse_json as parse_json
+import loading
 
-def main2():
-    parse_json.main1()
+def main():
+    loading.load_pills()
     while True:
       schedule.run_pending()
       time.sleep(1)
 
-main2()
+main()
