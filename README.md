@@ -15,18 +15,24 @@ Servo Channels
 * Stirring  0, 2, 4, 6
 * Cylinder  8 to 11
 
+Cylinder Angles:
+* Dispenser 0: 0 (smallest), 65, 115, 170
+* Dispenser 1: 0 needs fixing
+* Dispenser 2: 160 (smallest), 0 slightly off, 50, 105
+* Dispenser 3: 0 (smallest), 65, 125, 180 needs fixing
+
 
 GPIO
-* Dispenser 1 (Grey):
+* Dispenser 0 (Grey):
     * Solenoid: #4
     * Photoresistor: #17
-* Dispenser 2:
+* Dispenser 1:
     * Solenoid: #18
     * Photoresistor: #27
-* Dispenser 3:
+* Dispenser 2:
     * Solenoid: #22
     * Photoresistor: #23
-* Dispenser 4:
+* Dispenser 3:
     * Solenoid: #24
     * Photoresistor: #25
 

@@ -17,17 +17,13 @@ kit = ServoKit(channels=16)
 def servoTest(chID):
     kit.servo[chID].angle = 0
     time.sleep(1)
-    kit.servo[chID].angle = 45
+    kit.servo[chID].angle = 65
     time.sleep(1)
-    kit.servo[chID].angle = 90
+    kit.servo[chID].angle = 115
     time.sleep(1)
-    kit.servo[chID].angle = 135
+    kit.servo[chID].angle = 170
     time.sleep(1)
-    kit.servo[chID].angle = 180
-    time.sleep(1)
-    kit.servo[chID].angle = 110
-    time.sleep(1)
-##    kit.servo[chID].angle = 0
+    kit.servo[chID].angle = 0
 
 ##servoTest(8)
-servoTest(11)
+servoTest(8)

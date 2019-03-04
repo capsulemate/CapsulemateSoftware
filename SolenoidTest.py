@@ -3,8 +3,9 @@ import time
 from adafruit_servokit import ServoKit
 
 GPIO.setmode(GPIO.BCM)
-solenoid1 = 16
-servoID = 6
+solenoid1 = 4
+servoID = 0
+
 GPIO.setup(solenoid1, GPIO.OUT)
 
 def dispense (solenoidGPIO):
@@ -20,7 +21,7 @@ time.sleep(1.5)
 
 for i in range(5):
     print('dispense')
-##    dispense(solenoid1)
+    dispense(solenoid1)
 
 time.sleep(1)
 kit.continuous_servo[servoID].throttle = 0
