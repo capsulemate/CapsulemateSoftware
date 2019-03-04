@@ -24,3 +24,7 @@ PI_CONFIG = [
         "photoresistor": 7
     },
 ]
+
+# any code to initialize the sensors/gpio
+def init_sensors():
+    print("sensors initialized")

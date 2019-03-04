@@ -1,9 +1,10 @@
 # this class is so we can have objects for each of the storage containers with their associated servo_numbers ... ...
 # Additional things to add once we are done MVP:
-  # -warning when pills are almost out, tell them to refill
+# -warning when pills are almost out, tell them to refill
 import schedule
 import time
 from piConfig import PI_CONFIG
+
 
 MAX_NUM_TRIES = 3
 NUM_LOW_ON_PILLS = 10
