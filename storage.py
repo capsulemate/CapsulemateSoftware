@@ -7,12 +7,14 @@ import time
 class Storage:
   # add any other attributes you need, I feel like we need the num of pills and name of medicine to display to the screen
   # but we might want to create another class for displaying things to the screen
-  def __init__(self, storage_container,servo_motor_top, servo_motor_cylinder,solenoid, photoresistor):
+  def __init__(self, storage_container,servo_motor_top, servo_motor_cylinder,solenoid, photoresistor, med_name, num_pills):
     self.storage_container = storage_container
     self.servo_motor_top = servo_motor_top
     self.servo_motor_cylinder = servo_motor_cylinder
     self.solenoid = solenoid
     self.photoresistor = photoresistor
+    self.med_name = med_name
+    self.num_pills = num_pills
         
 # ------------------METHODS -------------------------------------------------------------
 
@@ -28,21 +30,20 @@ def dispense(storage_container, medicine_name, pills_per_dose, photoresistor):
   # start stirring the stirring rod
   for i in range(pills_per_dose):
     dispensed = dispense_single(storage_container, photoresistor)
-    while not dispensed or num_tries < 3:
+    while not dispensed and num_tries < 3:
       dispensed = dispense_single(storage_container, photoresistor)
       num_tries = num_tries + 1
     if dispensed:
       # need to make num_pills a global variable or make a medicine class to keep count of pills
       num_pills = num_pills - pills_per_dose 
       if num_pills < pills_per_dose:
-        schedule.CancelJob
-      # print message to screen that there is not enough pills
-    else:
-      return True
-      # print some other message that the pills were dispensed
-      # sound the buzzer 
-      # wait for button press for acknowledgement
-      print("Dispensed" + pills_per_dose + "pills")
+        cancel_job()
+      else:
+       return True
+        # print some other message that the pills were dispensed
+        # sound the buzzer 
+        # wait for button press for acknowledgement
+        # print("Dispensed" + pills_per_dose + "pills")
 
 
 def dispense_single(storage_container, photoresistor_number):
@@ -54,3 +55,13 @@ def did_dispense(storage_container, photoresistor_number):
   # use an averaging function over the course of 2 seconds 
   dispensed = False
   return dispensed
+
+def cancel_job(): 
+  # finish this function
+  # consult https://github.com/dbader/schedule/ for correct syntax for cancelling a job
+    schedule.CancelJob
+  # print message to screen that there is not enough pills
+
+def low_on_pills(): 
+  # function that warns when their is less than 10 pills
+  return True
