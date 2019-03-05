@@ -12,7 +12,7 @@ Control scripts to dispense pills and access prescription data
 
 Hardware Mapping:
 Servo Channels
-* Stirring  0, 2, 4, 6
+* Stirring  0, 2, 4 (stops at 0.05), 6
 * Cylinder  8 to 11
 
 Cylinder Angles: (smallest hole to biggest)

@@ -10,7 +10,7 @@ GreenButton = 12
 
 buzzer = Buzzer(BuzzerGPIO)
 buzzer.on()
-time.sleep(1)
+time.sleep(0.5)
 buzzer.off()
 time.sleep(1)
 

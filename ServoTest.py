@@ -26,4 +26,4 @@ def servoTest(chID):
     kit.servo[chID].angle = 0
 
 ##servoTest(8)
-servoTest(11)
+servoTest(9)
