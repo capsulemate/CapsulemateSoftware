@@ -11,7 +11,7 @@ def create_schedule(quadrant, dispense_times, pills_per_dose):
     schedule.every().day.at(time).do(storage.dispense, quadrant, pills_per_dose)
 
 # ----------------------------- start of main
-def load_pills():
+def load_pills(win):
   # make objects for each of the storage quadrants
   quadrants = [Storage(0), Storage(1), Storage(2), Storage(3)]
 
@@ -29,8 +29,9 @@ def load_pills():
       quadrants[current_quadrant].med_name = medicine_name
       quadrants[current_quadrant].num_pills = num_pills
       # turn cylinder component to correct hole + get confirmation from user that the pills are in 
-      storage.turn_cylinder(quadrants[current_quadrant], hole_size)
+      storage.turn_cylinder(quadrants[current_quadrant], hole_size, win)
       create_schedule(quadrants[current_quadrant], dispense_times, pills_per_dose)
       current_quadrant = current_quadrant + 1
+      time.sleep(5) #remove this once cylinder code is in
   print("Loading process is done!")
   return quadrants      
