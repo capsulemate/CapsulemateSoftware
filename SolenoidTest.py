@@ -3,8 +3,8 @@ import time
 from adafruit_servokit import ServoKit
 
 GPIO.setmode(GPIO.BCM)
-solenoid1 = 4
-servoID = 0
+solenoid1 = 18
+servoID = 2
 
 GPIO.setup(solenoid1, GPIO.OUT)
 

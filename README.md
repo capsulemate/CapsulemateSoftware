@@ -15,11 +15,11 @@ Servo Channels
 * Stirring  0, 2, 4, 6
 * Cylinder  8 to 11
 
-Cylinder Angles:
-* Dispenser 0: 0 (smallest), 65, 115, 170
-* Dispenser 1: 0 needs fixing
-* Dispenser 2: 160 (smallest), 0 slightly off, 50, 105
-* Dispenser 3: 0 (smallest), 65, 125, 180 needs fixing
+Cylinder Angles: (smallest hole to biggest)
+* Dispenser 0: 0, 65, 115, 170
+* Dispenser 1: 75, 125, 180, 20
+* Dispenser 2: 160, 0 slightly off, 50, 105
+* Dispenser 3: 0, 125, 180, 65 (somewhat unreliable
 
 
 GPIO
