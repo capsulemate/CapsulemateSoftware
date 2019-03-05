@@ -3,6 +3,7 @@
 # -warning when pills are almost out, tell them to refill
 import schedule
 import time
+import gui
 from piConfig import PI_CONFIG
 
 
@@ -24,11 +25,12 @@ class Storage:
         
 # ------------------METHODS -------------------------------------------------------------
 
-def turn_cylinder(quadrant, hole_size):
+def turn_cylinder(quadrant, hole_size, win):
   # actually turn the motor
   # print the below message to the screen
-	print("Please fill storage container " + str(quadrant.storage_container) + " with medicine " + quadrant.med_name)
-	# wait for them to press a button acknowledging they've filled the container before moving on 
+  gui.change_instruction_text(win, "Please fill storage container {} with medicine {}".format(quadrant.storage_container, quadrant.med_name))
+  gui.change_button_text(win, ["", "", "OK"])
+  # wait for them to press a button acknowledging they've filled the container before moving on 
  
 def dispense(quadrant, pills_per_dose):
   # start stirring the stirring rod
