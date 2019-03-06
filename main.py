@@ -2,13 +2,27 @@ import schedule
 import time
 import loading
 import gui
-import piConfig
+from piConfig import PI_INTERFACE_CONFIG
+import RPi.GPIO as GPIO
+from adafruit_servokit import ServoKit
+
+# code to initialize the servos, GPIO, Button, and Buzzer
+# Solenoid is initialized in the storage class
+def init_hardware():
+      kit = ServoKit(channels=16)
+      GPIO.setmode(GPIO.BCM)
+      GPIO.setup(PI_INTERFACE_CONFIG["red_button"], GPIO.IN)
+      GPIO.setup(PI_INTERFACE_CONFIG["yellow_button"], GPIO.IN)
+      GPIO.setup(PI_INTERFACE_CONFIG["green_button"], GPIO.IN)
+      GPIO.setup(PI_INTERFACE_CONFIG["buzzer"], GPIO.OUT)
+      print("Hardware initialized")
+      return GPIO, kit
 
 def main():
 
     win = gui.init_gui()
-    quadrants = loading.load_pills(win)
-    piConfig.init_sensors()
+    gpio, kit = init_hardware()
+    quadrants = loading.load_pills(win, gpio, kit)
     while True:
       schedule.run_pending()
       time.sleep(1)
