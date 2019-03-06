@@ -9,3 +9,39 @@ Control scripts to dispense pills and access prescription data
 - [ ] add function to alert a caregiver if something is off i.e. they haven't taken their medicine
 - [ ] put together a demo script (i.e add a medicine template)
 
+
+Hardware Mapping:
+Servo Channels
+* Stirring  0, 2, 4 (stops at 0.05), 6
+* Cylinder  8 to 11
+
+Cylinder Angles: (smallest hole to biggest)
+* Dispenser 0: 0, 65, 115, 170
+* Dispenser 1: 75, 125, 180, 20
+* Dispenser 2: 160, 0 slightly off, 50, 105
+* Dispenser 3: 0, 125, 180, 65 (somewhat unreliable
+
+
+GPIO
+* Dispenser 0 (Grey):
+    * Solenoid: #4
+    * Photoresistor: #17
+* Dispenser 1:
+    * Solenoid: #18
+    * Photoresistor: #27
+* Dispenser 2:
+    * Solenoid: #22
+    * Photoresistor: #23
+* Dispenser 3:
+    * Solenoid: #24
+    * Photoresistor: #25
+
+
+* Buttons:
+    * Red: #5
+    * Yellow: #6
+    * Green: #12
+
+
+* Buzzer: #13
+
