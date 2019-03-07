@@ -2,20 +2,26 @@ import json
 import schedule
 import time
 import storage
+import gui
+import interface
 from storage import Storage
 
 
 #------------ function to create the sechedule
-def create_schedule(quadrant, dispense_times, pills_per_dose):
+def create_schedule(quadrant, dispense_times, pills_per_dose, kit, win, gpio):
   for time in dispense_times:
-    schedule.every().day.at(time).do(storage.dispense, quadrant, pills_per_dose)
+    schedule.every().day.at(time).do(storage.dispense, quadrant, pills_per_dose, kit, win, gpio)
 
 # ----------------------------- start of main
-def load_pills(win):
+def load_pills(win, gpio, kit):
   # make objects for each of the storage quadrants
-  quadrants = [Storage(0), Storage(1), Storage(2), Storage(3)]
+  quadrants = [
+    Storage(0, gpio),
+    Storage(1, gpio), 
+    Storage(2, gpio), 
+    Storage(3, gpio)
+  ]
 
-  current_quadrant = 0
   with open('template.json') as template:
     data = json.load(template)["Medicine"]
     for med in data: 
@@ -26,12 +32,15 @@ def load_pills(win):
       pills_per_dose = med["PillsPerDose"]
       num_pills = med["NumPills"]
       # set medication information for corresponding Storage class
-      quadrants[current_quadrant].med_name = medicine_name
-      quadrants[current_quadrant].num_pills = num_pills
+      quadrants[storage_container].med_name = medicine_name
+      quadrants[storage_container].num_pills = num_pills
       # turn cylinder component to correct hole + get confirmation from user that the pills are in 
-      storage.turn_cylinder(quadrants[current_quadrant], hole_size, win)
-      create_schedule(quadrants[current_quadrant], dispense_times, pills_per_dose)
-      current_quadrant = current_quadrant + 1
-      time.sleep(5) #remove this once cylinder code is in
-  print("Loading process is done!")
+      storage.turn_cylinder(quadrants[storage_container], hole_size, kit)
+      gui.change_instruction_text(win, "Please fill storage container {} with medicine {}".format(storage_container, medicine_name))
+      gui.change_button_text(win, ["", "", "OK"])
+      interface.wait_for_button_press(gpio,win) 
+      create_schedule(quadrants[storage_container], dispense_times, pills_per_dose, kit, win, gpio)
+  # loading done
+  gui.change_instruction_text(win, "Loading Complete!")
+  gui.change_button_text(win, ["", "", ""])
   return quadrants      

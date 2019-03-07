@@ -4,66 +4,88 @@
 import schedule
 import time
 import gui
-from piConfig import PI_CONFIG
+from piConfig import PI_DISPENSER_CONFIG, PI_CYLINDER_CONFIG 
 
-
+TOP_SERVO_SPEED = 0.5
 MAX_NUM_TRIES = 3
 NUM_LOW_ON_PILLS = 10
+PHOTOSENSOR_THRESHOLD = 500
 
 class Storage:
   # add any other attributes you need, I feel like we need the num of pills and name of medicine to display to the screen
   # but we might want to create another class for displaying things to the screen
-  def __init__(self, storage_container, med_name = "", num_pills = 0):
+  def __init__(self, storage_container, gpio, med_name = "", num_pills = 0):
     self.storage_container = storage_container
     self.med_name = med_name
     self.num_pills = num_pills
     # get sensor pin numbers from Raspberry PI config
-    self.servo_motor_top = PI_CONFIG[storage_container]["servo_motor_top"]
-    self.servo_motor_cylinder = PI_CONFIG[storage_container]["servo_motor_cylinder"]
-    self.solenoid = PI_CONFIG[storage_container]["solenoid"]
-    self.photoresistor = PI_CONFIG[storage_container]["photoresistor"]
+    self.servo_motor_top = PI_DISPENSER_CONFIG[storage_container]["servo_motor_top"]
+    self.servo_motor_cylinder = PI_DISPENSER_CONFIG[storage_container]["servo_motor_cylinder"]
+    self.solenoid = PI_DISPENSER_CONFIG[storage_container]["solenoid"]
+    self.photoresistor = PI_DISPENSER_CONFIG[storage_container]["photoresistor"]
+    gpio.setup(self.solenoid, gpio.OUT)
+    
         
 # ------------------METHODS -------------------------------------------------------------
 
-def turn_cylinder(quadrant, hole_size, win):
+def turn_cylinder(quadrant, hole_size, kit):
   # actually turn the motor
-  # print the below message to the screen
-  gui.change_instruction_text(win, "Please fill storage container {} with medicine {}".format(quadrant.storage_container, quadrant.med_name))
-  gui.change_button_text(win, ["", "", "OK"])
-  # wait for them to press a button acknowledging they've filled the container before moving on 
+  kit.servo[quadrant.servo_motor_cylinder].angle = PI_CYLINDER_CONFIG[quadrant.storage_container]["hole{}".format(hole_size)]
  
-def dispense(quadrant, pills_per_dose):
+def dispense(quadrant, pills_per_dose, kit, win, gpio):
   # start stirring the stirring rod
+  kit.continuous_servo[quadrant.servo_motor_top].throttle = TOP_SERVO_SPEED
+  time.sleep(5)
   for i in range(pills_per_dose):
     num_tries = 0
-    dispensed = dispense_single(quadrant)
-    while not dispensed and num_tries < MAX_NUM_TRIES:
-      dispensed = dispense_single(quadrant)
+    is_pill_present = is_pill_present(quadrant, gpio)
+    while not is_pill_present and num_tries < MAX_NUM_TRIES:
+      time.sleep(2) # give extra 2 minutes to blend
       num_tries = num_tries + 1
-    if dispensed:
-      # need to make num_pills a global variable or make a medicine class to keep count of pills
+    if is_pill_present:
+      dispense_single(quadrant, gpio)
       quadrant.num_pills = quadrant.num_pills - pills_per_dose 
       if quadrant.num_pills < pills_per_dose:
         cancel_job()
       else:
        if quadrant.num_pills < NUM_LOW_ON_PILLS:
          low_on_pills()
-       print(quadrant.med_name + " was dispensed")
-       return True
-        # print some other message that the pills were dispensed
-        # sound the buzzer 
-        # wait for button press for acknowledgement
-        # print("Dispensed" + pills_per_dose + "pills")
+    else:
+       gui.change_instruction_text(win, "Photoresistor does not detect in quadrant {}".format(quadrant.storage_container))   
 
-def dispense_single(quadrant):
-  # power the correct solenoid to push 
-  return did_dispense(quadrant)
+    gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
+    kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
+      # sound the buzzer 
+      # wait for button press for acknowledgement if they don't alert caregiver after certain time
 
-def did_dispense(quadrant):
+def dispense_single(quadrant, gpio):
+  # power the correct solenoid to push
+  gpio.output(quadrant.solenoid, True)
+  time.sleep(0.5)
+  gpio.output(quadrant.solenoid, False)
+  time.sleep(1)
+  return 
+
+def is_pill_present(quadrant, gpio):
   # check if the photoresistor detected anything and return true or false
-  # use an averaging function over the course of 2 seconds 
-  dispensed = False
-  return dispensed
+  samples = []
+  for i in range(1,10):
+        samples[i] = photosensor_read(quadrant.photoresistor, gpio)
+  avg = sum(samples) / 10
+  if avg > PHOTOSENSOR_THRESHOLD:
+        return True
+  return False
+
+def photosensor_read(RCpin, gpio):
+    reading = 0
+    gpio.setup(RCpin, gpio.OUT)
+    gpio.output(RCpin, gpio.LOW)
+    time.sleep(0.1)
+
+    gpio.setup(RCpin, gpio.IN)
+    while(gpio.input(RCpin) == gpio.LOW):
+        reading += 1
+    return reading
 
 def cancel_job(): 
   # finish this function
