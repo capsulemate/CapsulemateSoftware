@@ -38,11 +38,11 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
   time.sleep(5)
   for i in range(pills_per_dose):
     num_tries = 0
-    is_pill_present = is_pill_present(quadrant, gpio)
-    while not is_pill_present and num_tries < MAX_NUM_TRIES:
+    pill_present = is_pill_present(quadrant, gpio)
+    while not pill_present and num_tries < MAX_NUM_TRIES:
       time.sleep(2) # give extra 2 minutes to blend
       num_tries = num_tries + 1
-    if is_pill_present:
+    if pill_present:
       dispense_single(quadrant, gpio)
       quadrant.num_pills = quadrant.num_pills - pills_per_dose 
       if quadrant.num_pills < pills_per_dose:

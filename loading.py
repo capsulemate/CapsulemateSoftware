@@ -22,7 +22,7 @@ def load_pills(win, gpio, kit):
     Storage(3, gpio)
   ]
 
-  with open('template.json') as template:
+  with open('templateTest.json') as template:
     data = json.load(template)["Medicine"]
     for med in data: 
       storage_container = med["StorageContainer"]
@@ -38,9 +38,12 @@ def load_pills(win, gpio, kit):
       storage.turn_cylinder(quadrants[storage_container], hole_size, kit)
       gui.change_instruction_text(win, "Please fill storage container {} with medicine {}".format(storage_container, medicine_name))
       gui.change_button_text(win, ["", "", "OK"])
+      print("waiting for button" + medicine_name)
       interface.wait_for_button_press(gpio,win) 
       create_schedule(quadrants[storage_container], dispense_times, pills_per_dose, kit, win, gpio)
   # loading done
   gui.change_instruction_text(win, "Loading Complete!")
   gui.change_button_text(win, ["", "", ""])
+  time.sleep(3)
+  gui.change_instruction_text(win, "")
   return quadrants      

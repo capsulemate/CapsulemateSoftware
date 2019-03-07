@@ -1,0 +1,13 @@
+{
+    "Medicine": [
+        {
+            "StorageContainer": 0, 
+            "Name": "Tylenol", 
+            "Size": "2",
+            "NumPills": 10,
+            "DispenseTimes":["18:24"],
+            "PillsPerDose": 1
+        }
+        
+    ]
+}

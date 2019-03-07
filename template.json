@@ -3,7 +3,7 @@
         {
             "StorageContainer": 0, 
             "Name": "Tylenol", 
-            "Size": "00",
+            "Size": "4",
             "NumPills":100, 
             "DispenseTimes":["14:20"],
             "PillsPerDose": 1
@@ -11,7 +11,7 @@
         {
             "StorageContainer": 2, 
             "Name": "Advil", 
-            "Size": "0",
+            "Size": "4",
             "NumPills":100, 
             "DispenseTimes":[
                                 "14:20",
@@ -22,7 +22,7 @@
         {
             "StorageContainer": 3, 
             "Name": "Aspirin", 
-            "Size": "2",
+            "Size": "3",
             "NumPills":100, 
             "DispenseTimes":[
                                 "08:30",
@@ -34,7 +34,7 @@
         {
             "StorageContainer": 1, 
             "Name": "Something", 
-            "Size": "4",
+            "Size": "1",
             "NumPills":100, 
             "DispenseTimes":[
                                 "17:00"
