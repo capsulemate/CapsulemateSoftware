@@ -15,6 +15,6 @@ def rctime (RCpin):
     return reading
 
 while True:
-    print(rctime(17))
+    print(rctime(27))
 ##    if rctime(18) > 8000:
 ##        print('PILL', rctime(18))

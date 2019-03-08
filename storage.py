@@ -6,10 +6,10 @@ import time
 import gui
 from piConfig import PI_DISPENSER_CONFIG, PI_CYLINDER_CONFIG 
 
-TOP_SERVO_SPEED = 0.5
-MAX_NUM_TRIES = 3
+TOP_SERVO_SPEED = 0.25
+MAX_NUM_TRIES = 10
 NUM_LOW_ON_PILLS = 10
-PHOTOSENSOR_THRESHOLD = 500
+PHOTOSENSOR_THRESHOLD = [250, 200, 250, 290]
 
 class Storage:
   # add any other attributes you need, I feel like we need the num of pills and name of medicine to display to the screen
@@ -40,8 +40,9 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
     num_tries = 0
     pill_present = is_pill_present(quadrant, gpio)
     while not pill_present and num_tries < MAX_NUM_TRIES:
-      time.sleep(2) # give extra 2 minutes to blend
+      time.sleep(1) # give extra 2 seconds to blend
       num_tries = num_tries + 1
+      pill_present = is_pill_present(quadrant, gpio)
     if pill_present:
       dispense_single(quadrant, gpio)
       quadrant.num_pills = quadrant.num_pills - pills_per_dose 
@@ -64,15 +65,20 @@ def dispense_single(quadrant, gpio):
   time.sleep(0.5)
   gpio.output(quadrant.solenoid, False)
   time.sleep(1)
+  print("dispensed")
   return 
 
 def is_pill_present(quadrant, gpio):
   # check if the photoresistor detected anything and return true or false
-  samples = []
-  for i in range(1,10):
+  print("checking photoresistor")
+  samples = [0]*10
+  for i in range(10):
         samples[i] = photosensor_read(quadrant.photoresistor, gpio)
   avg = sum(samples) / 10
-  if avg > PHOTOSENSOR_THRESHOLD:
+  print("avg = {}".format(avg))
+  for s in samples:
+      print("sample = {}".format(s))
+  if avg > PHOTOSENSOR_THRESHOLD[quadrant.storage_container]:
         return True
   return False
 
