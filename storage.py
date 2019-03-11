@@ -1,6 +1,4 @@
 # this class is so we can have objects for each of the storage containers with their associated servo_numbers ... ...
-# Additional things to add once we are done MVP:
-# -warning when pills are almost out, tell them to refill
 import schedule
 import time
 import gui
@@ -52,7 +50,8 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
         cancel_job()
       else:
        if quadrant.num_pills < NUM_LOW_ON_PILLS:
-         low_on_pills()
+           gui.change_instruction_text(win, " Medicine {} is running low, please refill".format(quadrant.med_name))
+           time.sleep(1)
     else:
        gui.change_instruction_text(win, "Photoresistor does not detect in quadrant {}".format(quadrant.storage_container))   
 
@@ -106,7 +105,5 @@ def photosensor_read(RCpin, gpio):
         reading += 1
     return reading
 
-
-def low_on_pills(): 
-  # function that warns when their is less than 10 pills
-  return True
+def cancel_job():
+  schedule.CancelJob()
