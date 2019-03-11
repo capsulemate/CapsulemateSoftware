@@ -4,6 +4,8 @@
 import schedule
 import time
 import gui
+import interface
+import external
 from piConfig import PI_DISPENSER_CONFIG, PI_CYLINDER_CONFIG 
 
 TOP_SERVO_SPEED = 0.25
@@ -56,8 +58,19 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
 
     gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
     kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
-      # sound the buzzer 
-      # wait for button press for acknowledgement if they don't alert caregiver after certain time
+    interface.sound_buzzer()
+    acknowledgement(gpio, win)
+
+def storage_test(win):
+      gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
+
+def acknowledgement(gpio, win):
+      # the 300 means wait 5 minutes
+      if interface.pressed_button(gpio, win, "yellow_button", 300):
+        gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
+      else:
+        external.sendemail(['tyurina.kumar@gmail.com'])
+        gui.change_instruction_text(win, "Contacted caregiver")
 
 def dispense_single(quadrant, gpio):
   # power the correct solenoid to push
@@ -93,11 +106,6 @@ def photosensor_read(RCpin, gpio):
         reading += 1
     return reading
 
-def cancel_job(): 
-  # finish this function
-  # consult https://github.com/dbader/schedule/ for correct syntax for cancelling a job
-    schedule.CancelJob
-  # print message to screen that there is not enough pills
 
 def low_on_pills(): 
   # function that warns when their is less than 10 pills

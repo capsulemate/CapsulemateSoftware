@@ -3,9 +3,8 @@ import time
 import loading
 import gui
 from piConfig import PI_INTERFACE_CONFIG
-import datetime
-# import RPi.GPIO as GPIO
-# from adafruit_servokit import ServoKit
+import RPi.GPIO as GPIO
+from adafruit_servokit import ServoKit
 
 # code to initialize the servos, GPIO, Button, and Buzzer
 # Solenoid is initialized in the storage class
@@ -23,14 +22,12 @@ def next_run():
       print (schedule.next_run())
       # today = datetime.datetime.today()  
       # print(today)
+
 def main():
 
     win = gui.init_gui()
-#     gpio, kit = init_hardware()
-#     quadrants = loading.load_pills(win, gpio, kit)
-    loading.create_schedule_test()
-    next_run()
-#     schedule.next_run()
+    gpio, kit = init_hardware()
+    quadrants = loading.load_pills(win, gpio, kit)
     while True:
       schedule.run_pending()
       time.sleep(1)
