@@ -58,17 +58,17 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
     gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
     kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
     interface.sound_buzzer()
-    acknowledgement(gpio, win)
+    acknowledgement(gpio, win, quadrant)
 
-def storage_test(win):
-      gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
+# def storage_test(win):
+#       gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
 
-def acknowledgement(gpio, win):
-      # the 300 means wait 5 minutes
+def acknowledgement(gpio, win, quadrant):
+      # wait 5 min (300 seconds) for a button press
       if interface.pressed_button(gpio, win, "yellow_button", 300):
         gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
       else:
-        external.sendemail(['tyurina.kumar@gmail.com'])
+        external.sendemail(['tyurina.kumar@gmail.com'], quadrant.med_name)
         gui.change_instruction_text(win, "Contacted caregiver")
 
 def dispense_single(quadrant, gpio):

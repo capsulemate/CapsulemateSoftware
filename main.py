@@ -3,6 +3,7 @@ import time
 import loading
 import gui
 from piConfig import PI_INTERFACE_CONFIG
+import external
 import RPi.GPIO as GPIO
 from adafruit_servokit import ServoKit
 
@@ -23,6 +24,7 @@ def main():
     win = gui.init_gui()
     gpio, kit = init_hardware()
     quadrants = loading.load_pills(win, gpio, kit)
+#     external.sendemail("tyurina.kumar@gmail.com", "Tylenol")
     while True:
       schedule.run_pending()
       time.sleep(1)

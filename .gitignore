@@ -106,3 +106,4 @@ venv.bak/
 # Tyurina Things
 .vscode/settings.json
 .DS_Store
+credentials.py
