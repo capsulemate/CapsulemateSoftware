@@ -18,11 +18,6 @@ def init_hardware():
       print("Hardware initialized")
       return GPIO, kit
 
-def next_run():
-      print (schedule.next_run())
-      # today = datetime.datetime.today()  
-      # print(today)
-
 def main():
 
     win = gui.init_gui()
