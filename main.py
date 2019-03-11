@@ -11,9 +11,9 @@ from adafruit_servokit import ServoKit
 def init_hardware():
       kit = ServoKit(channels=16)
       GPIO.setmode(GPIO.BCM)
-      GPIO.setup(PI_INTERFACE_CONFIG["red_button"], GPIO.IN)
-      GPIO.setup(PI_INTERFACE_CONFIG["yellow_button"], GPIO.IN)
-      GPIO.setup(PI_INTERFACE_CONFIG["green_button"], GPIO.IN)
+      GPIO.setup(PI_INTERFACE_CONFIG["red_button"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+      GPIO.setup(PI_INTERFACE_CONFIG["yellow_button"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+      GPIO.setup(PI_INTERFACE_CONFIG["green_button"], GPIO.IN, pull_up_down=GPIO.PUD_UP)
       GPIO.setup(PI_INTERFACE_CONFIG["buzzer"], GPIO.OUT)
       print("Hardware initialized")
       return GPIO, kit

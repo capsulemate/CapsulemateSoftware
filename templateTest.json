@@ -1,0 +1,14 @@
+{
+    "Medicine": [
+
+	{
+            "StorageContainer": 2, 
+            "Name": "Medicine4", 
+            "Size": "2",
+            "NumPills": 10,
+            "DispenseTimes":["19:52", "19:53"],
+            "PillsPerDose": 2
+        }
+        
+    ]
+}
