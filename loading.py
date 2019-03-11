@@ -12,6 +12,13 @@ def create_schedule(quadrant, dispense_times, pills_per_dose, kit, win, gpio):
   for time in dispense_times:
     schedule.every().day.at(time).do(storage.dispense, quadrant, pills_per_dose, kit, win, gpio)
 
+def create_schedule_test():
+      for time in ["12:00","19:00"]:
+        schedule.every().day.at(time).do(help)
+
+def help():
+      print("Hello");
+
 # ----------------------------- start of main
 def load_pills(win, gpio, kit):
   # make objects for each of the storage quadrants
