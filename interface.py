@@ -19,8 +19,13 @@ def pressed_button(gpio, win, button_colour, timeout):
     timeout_start = time.time()
     print("Waiting for button press")
     while time.time() < timeout_start + timeout:
-        wait_for_button_press(gpio, win, button_colour)
-        return True
+        if(gpio.input(PI_INTERFACE_CONFIG[button_colour]) == gpio.LOW):
+            while time.time() < timeout_start + timeout:
+                if(gpio.input(PI_INTERFACE_CONFIG[button_colour]) == gpio.HIGH):
+                    time.sleep(0.5)
+                    return True
+                gui.maintain_gui(win)
+        gui.maintain_gui(win)
     print("Timed out!")
     return False
 
