@@ -9,6 +9,7 @@ def wait_for_button_press(gpio, win, button_colour):
         if(gpio.input(PI_INTERFACE_CONFIG[button_colour]) == gpio.LOW):
             while(True):
                 if(gpio.input(PI_INTERFACE_CONFIG[button_colour]) == gpio.HIGH):
+                    time.sleep(0.5)
                     return
                 gui.maintain_gui(win)
         gui.maintain_gui(win)
