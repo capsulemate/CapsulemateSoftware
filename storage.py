@@ -55,31 +55,31 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
            time.sleep(1)
     else:
        gui.change_instruction_text(win, "Photoresistor does not detect in quadrant {}".format(quadrant.storage_container))   
-
-    gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
-    kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
-    buzz()
-    acknowledgement(gpio, win, quadrant)
+  gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
+  kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
+  buzz(gpio)
+  acknowledgement(gpio, win, quadrant)
 
 def storage_test(win):
       gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
 
 def acknowledgement(gpio, win, quadrant):
       # wait 5 min (300 seconds) for a button press
-      if interface.pressed_button(gpio, win, "yellow_button", 300):
+      if interface.pressed_button(gpio, win, "yellow_button", 10):
         gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
       else:
+        print("We are sending")
         external.sendemail(['tyurina.kumar@gmail.com'], quadrant.med_name)
         gui.change_instruction_text(win, "Contacted caregiver")
 
-def buzz():
+def buzz(gpio):
     next_dispense = schedule.next_run()
     current_time = datetime.datetime.now()
     now = current_time.replace(second=0, microsecond=0)
     diff = next_dispense - now
     five_min = datetime.timedelta(minutes=5)
     if (next_dispense - now > five_min):
-      interface.sound_buzzer()
+      interface.sound_buzzer(gpio)
     else: 
       pass
 

@@ -1,7 +1,6 @@
 from piConfig import PI_INTERFACE_CONFIG
 import gui
 import time
-from gpiozero import Buzzer
 
 ## return any of 3 buttons that are pressed
 def wait_for_button_press(gpio, win, button_colour):
@@ -23,11 +22,10 @@ def pressed_button(gpio, win, button_colour, timeout = 300):
         return True
     return False
 
-def sound_buzzer():
-    buzzer = Buzzer(PI_INTERFACE_CONFIG["buzzer"])
-    buzzer.on()
+def sound_buzzer(gpio):
+    gpio.output(PI_INTERFACE_CONFIG["buzzer"], gpio.HIGH)
     time.sleep(0.5)
-    buzzer.off()
-    time.sleep(1)
+    gpio.output(PI_INTERFACE_CONFIG["buzzer"], gpio.LOW)
+
         
 
