@@ -65,9 +65,7 @@ def next_run(win):
 
 def acknowledgement(gpio, win, quadrant):
       # wait 5 min (300 seconds) for a button press
-      if interface.pressed_button(gpio, win, "yellow_button", 10):
-        gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
-      else:
+      if not interface.pressed_button(gpio, win, "yellow_button", 10):
         print("We are sending")
         external.sendemail(['tyurina.kumar@gmail.com'], quadrant.med_name)
         gui.change_instruction_text(win, "Contacted caregiver")

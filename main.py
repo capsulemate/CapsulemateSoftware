@@ -27,6 +27,7 @@ def main():
 #     external.sendemail("tyurina.kumar@gmail.com", "Tylenol")
     while True:
       schedule.run_pending()
+      gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
       time.sleep(1)
       # need to run this every loop iteration
       gui.maintain_gui(win)

@@ -14,8 +14,7 @@ def sendemail(to_addr_list, med_name):
     msg['From'] = "capsulematefydp@gmail.com"
     msg['To'] = to_addr_list
     current_time = time()
-    body = "Hello, patient John Doe has not taken his medication:" + (med_name) + " scheduled to be taken by: " 
-    +(current_time) + "\n  \n Regards, CapsuleMate"
+    body = "Hello, patient John Doe has not taken his medication: {} scheduled to be taken by: {}".format(med_name,current_time)  + "\n  \n Regards, CapsuleMate"
     msg.attach(MIMEText(body,'plain'))
 
     server = smtplib.SMTP('smtp.gmail.com:587')
