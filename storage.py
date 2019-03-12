@@ -60,7 +60,7 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
   buzz(gpio)
   acknowledgement(gpio, win, quadrant)
 
-def storage_test(win):
+def next_run(win):
       gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
 
 def acknowledgement(gpio, win, quadrant):

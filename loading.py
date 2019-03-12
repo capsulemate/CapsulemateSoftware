@@ -43,7 +43,8 @@ def load_pills(win, gpio, kit):
       create_schedule(quadrants[storage_container], dispense_times, pills_per_dose, kit, win, gpio)
   # loading done
   gui.change_instruction_text(win, "Loading Complete!")
+
   gui.change_button_text(win, ["", "", ""])
   time.sleep(3)
-  gui.change_instruction_text(win, "")
+  storage.next_run(win)
   return quadrants      
