@@ -4,6 +4,7 @@ import time
 import gui
 import interface
 import external
+import datetime
 from piConfig import PI_DISPENSER_CONFIG, PI_CYLINDER_CONFIG 
 
 TOP_SERVO_SPEED = 0.25
@@ -57,11 +58,11 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
 
     gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
     kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
-    interface.sound_buzzer()
+    buzz()
     acknowledgement(gpio, win, quadrant)
 
-# def storage_test(win):
-#       gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
+def storage_test(win):
+      gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
 
 def acknowledgement(gpio, win, quadrant):
       # wait 5 min (300 seconds) for a button press
@@ -70,6 +71,17 @@ def acknowledgement(gpio, win, quadrant):
       else:
         external.sendemail(['tyurina.kumar@gmail.com'], quadrant.med_name)
         gui.change_instruction_text(win, "Contacted caregiver")
+
+def buzz():
+    next_dispense = schedule.next_run()
+    current_time = datetime.datetime.now()
+    now = current_time.replace(second=0, microsecond=0)
+    diff = next_dispense - now
+    five_min = datetime.timedelta(minutes=5)
+    if (next_dispense - now > five_min):
+      interface.sound_buzzer()
+    else: 
+      pass
 
 def dispense_single(quadrant, gpio):
   # power the correct solenoid to push
