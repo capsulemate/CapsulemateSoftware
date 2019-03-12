@@ -15,11 +15,13 @@ def wait_for_button_press(gpio, win, button_colour):
 
 
 # wait 5 minutes to see if the button was pressed
-def pressed_button(gpio, win, button_colour, timeout = 300):
+def pressed_button(gpio, win, button_colour, timeout):
     timeout_start = time.time()
+    print("Waiting for button press")
     while time.time() < timeout_start + timeout:
         wait_for_button_press(gpio, win, button_colour)
         return True
+    print("Timed out!")
     return False
 
 def sound_buzzer(gpio):
