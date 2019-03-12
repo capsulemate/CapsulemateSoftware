@@ -57,7 +57,7 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
        gui.change_instruction_text(win, "Photoresistor does not detect in quadrant {}".format(quadrant.storage_container))   
   gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
   kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
-  buzz(gpio)
+  interface.sound_buzzer(gpio)
   acknowledgement(gpio, win, quadrant)
 
 def next_run(win):
@@ -71,18 +71,6 @@ def acknowledgement(gpio, win, quadrant):
         print("We are sending")
         external.sendemail(['tyurina.kumar@gmail.com'], quadrant.med_name)
         gui.change_instruction_text(win, "Contacted caregiver")
-
-def buzz(gpio):
-    next_dispense = schedule.next_run()
-    current_time = datetime.datetime.now()
-    now = current_time.replace(second=0, microsecond=0)
-    diff = next_dispense - now
-    five_min = datetime.timedelta(minutes=5)
-    if (next_dispense - now > five_min):
-      interface.sound_buzzer(gpio)
-    else: 
-      print("Did not buzz")
-      pass
 
 def dispense_single(quadrant, gpio):
   # power the correct solenoid to push
