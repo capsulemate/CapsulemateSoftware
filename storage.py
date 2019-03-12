@@ -81,6 +81,7 @@ def buzz(gpio):
     if (next_dispense - now > five_min):
       interface.sound_buzzer(gpio)
     else: 
+      print("Did not buzz")
       pass
 
 def dispense_single(quadrant, gpio):
