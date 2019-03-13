@@ -5,6 +5,8 @@ import storage
 import gui
 import interface
 from storage import Storage
+import wget
+import credentials
 
 
 #------------ function to create the sechedule
@@ -22,7 +24,11 @@ def load_pills(win, gpio, kit):
     Storage(3, gpio)
   ]
 
-  with open('templateTest.json') as template:
+
+  
+  fs = wget.download(url="https://{}:8080/template.json".format(credentials.WEB_APP_IP))
+  with open(fs, 'r') as template_:
+    template = template_.read()
     data = json.load(template)["Medicine"]
     for med in data: 
       storage_container = med["StorageContainer"]

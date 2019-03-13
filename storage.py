@@ -70,6 +70,7 @@ def acknowledgement(gpio, win, quadrant):
         print("We are sending")
         external.sendemail('tyurina.kumar@gmail.com', quadrant.med_name)
         gui.change_instruction_text(win, "Contacted caregiver")
+        time.sleep(1)
 
 def dispense_single(quadrant, gpio):
   # power the correct solenoid to push
