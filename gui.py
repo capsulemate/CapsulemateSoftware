@@ -3,7 +3,7 @@ import tkinter as tk
 def init_gui():
     win = tk.Tk()
     win.title("CapsuleMate")
-    win.geometry('500x300')
+    win.geometry('500x400')
     tk.Label(win, text="Hello!", font=('Arial', 16)).pack()
     draw_buttons(win)
     win.update()
@@ -14,7 +14,7 @@ def maintain_gui(win):
     win.update()
 
 def change_instruction_text(win, text):
-    win.slaves()[0]["text"] = text
+    win.slaves()[0]["text"] = "\n\n\n{}".format(text)
     win.update()
 
 def change_button_text(win, text_list):
