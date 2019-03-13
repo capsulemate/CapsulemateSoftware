@@ -6,7 +6,7 @@
             "Name": "Medicine4", 
             "Size": "2",
             "NumPills": 10,
-            "DispenseTimes":["19:52", "19:53"],
+            "DispenseTimes":["10:45", "10:46"],
             "PillsPerDose": 2
         }
         

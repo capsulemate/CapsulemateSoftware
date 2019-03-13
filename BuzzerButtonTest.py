@@ -1,28 +1,16 @@
 ## Buzzer Button Test
 import time
-from gpiozero import Button, Buzzer
+import RPi.GPIO as GPIO
+from piConfig import PI_INTERFACE_CONFIG
 
 
-BuzzerGPIO = 13
-RedButton = 5
-YellowButton = 6
-GreenButton = 12
-
-buzzer = Buzzer(BuzzerGPIO)
-buzzer.on()
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(PI_INTERFACE_CONFIG["buzzer"], GPIO.OUT)
+GPIO.output(PI_INTERFACE_CONFIG["buzzer"], GPIO.HIGH)
 time.sleep(0.5)
-buzzer.off()
-time.sleep(1)
+GPIO.output(PI_INTERFACE_CONFIG["buzzer"], GPIO.LOW)
+GPIO.cleanup()
 
-RedButton = Button(RedButton)
-YellowButton = Button(YellowButton)
-GreenButton = Button(GreenButton)
 
-RedButton.wait_for_press()
-print('Red Button')
-YellowButton.wait_for_press()
-print('Yellow Button')
-GreenButton.wait_for_press()
-print('Green Button')
 
 

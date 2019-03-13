@@ -1,4 +1,5 @@
 import json
+import os
 import schedule
 import time
 import storage
@@ -25,12 +26,15 @@ def load_pills(win, gpio, kit):
   ]
 
 
-  
-  fs = wget.download(url="https://{}:8080/template.json".format(credentials.WEB_APP_IP))
-  with open(fs, 'r') as template_:
-    template = template_.read()
-    data = json.load(template)["Medicine"]
-    for med in data: 
+  output = "template.json"
+  if os.path.exists(output):
+      os.remove(output)
+  fs = wget.download(url=credentials.WEB_APP_URL)
+  with open(fs, 'r') as template:
+    data = json.load(template)
+    #data = json.load(data)
+    for m in data:
+      med = data[m]
       storage_container = med["StorageContainer"]
       medicine_name = med["Name"]
       hole_size = med["Size"]
