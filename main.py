@@ -4,6 +4,7 @@ import loading
 import gui
 from piConfig import PI_INTERFACE_CONFIG
 import external
+import interface
 import RPi.GPIO as GPIO
 from adafruit_servokit import ServoKit
 
@@ -28,6 +29,8 @@ def main():
     while True:
       schedule.run_pending()
       gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
+      gui.change_button_text(win, ["Dispense", "", ""])
+      interface.pressed_button(gpio, win,"red_button", 10)
       time.sleep(1)
       # need to run this every loop iteration
       gui.maintain_gui(win)

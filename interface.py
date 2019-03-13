@@ -13,6 +13,7 @@ def wait_for_button_press(gpio, win, button_colour):
                 gui.maintain_gui(win)
         gui.maintain_gui(win)
 
+# immediate dispense
 
 # wait 5 minutes to see if the button was pressed
 def pressed_button(gpio, win, button_colour, timeout):

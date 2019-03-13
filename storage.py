@@ -55,9 +55,10 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
            time.sleep(1)
     else:
        gui.change_instruction_text(win, "Photoresistor does not detect in quadrant {}".format(quadrant.storage_container))   
-  gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
+  gui.change_instruction_text(win, "Dispensed {}, press button to acknowledge".format(quadrant.med_name))
   kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
   interface.sound_buzzer(gpio)
+  gui.change_button_text(win, ["", "OK", ""]) 
   acknowledgement(gpio, win, quadrant)
 
 def next_run(win):
