@@ -31,7 +31,6 @@ def main():
       gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
       gui.change_button_text(win, ["Dispense", "", ""])
       interface.pressed_red_button(gpio, win, quadrants[0], 1, kit)
-      time.sleep(1)
       # need to run this every loop iteration
       gui.maintain_gui(win)
     
