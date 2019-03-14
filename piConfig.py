@@ -5,7 +5,7 @@ PI_DISPENSER_CONFIG = [
         "servo_motor_cylinder": 8,
         "solenoid": 4,
         "photoresistor": 17,
-        "servo_stop": 0
+        "servo_stop": -0.05
     },
     {
         "servo_motor_top": 2,
@@ -26,7 +26,7 @@ PI_DISPENSER_CONFIG = [
         "servo_motor_cylinder": 11,
         "solenoid": 24,
         "photoresistor": 25,
-        "servo_stop": 0
+        "servo_stop": 0.05
     },
 ]
 
