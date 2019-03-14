@@ -26,6 +26,10 @@ class Storage:
     self.photoresistor = PI_DISPENSER_CONFIG[storage_container]["photoresistor"]
     self.servo_stop = PI_DISPENSER_CONFIG[storage_container]["servo_stop"]
     gpio.setup(self.solenoid, gpio.OUT)
+
+  def is_pills_low(self):
+    return self.num_pills < 10
+    
     
         
 # ------------------METHODS -------------------------------------------------------------
