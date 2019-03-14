@@ -24,6 +24,7 @@ class Storage:
     self.servo_motor_cylinder = PI_DISPENSER_CONFIG[storage_container]["servo_motor_cylinder"]
     self.solenoid = PI_DISPENSER_CONFIG[storage_container]["solenoid"]
     self.photoresistor = PI_DISPENSER_CONFIG[storage_container]["photoresistor"]
+    self.servo_stop = PI_DISPENSER_CONFIG[storage_container]["servo_stop"]
     gpio.setup(self.solenoid, gpio.OUT)
     
         
@@ -56,7 +57,7 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
     else:
        gui.change_instruction_text(win, "Photoresistor does not detect in quadrant {}".format(quadrant.storage_container))   
   gui.change_instruction_text(win, "Dispensed {}, press button to acknowledge".format(quadrant.med_name))
-  kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
+  kit.continuous_servo[quadrant.servo_motor_top].throttle = quadrant.servo_stop
   interface.sound_buzzer(gpio)
   gui.change_button_text(win, ["", "OK", ""]) 
   acknowledgement(gpio, win, quadrant)
@@ -70,7 +71,7 @@ def acknowledgement(gpio, win, quadrant):
         print("We are sending")
         external.sendemail('tyurina.kumar@gmail.com', quadrant.med_name)
         gui.change_instruction_text(win, "Contacted caregiver")
-        time.sleep(1)
+        time.sleep(5)
 
 def dispense_single(quadrant, gpio):
   # power the correct solenoid to push

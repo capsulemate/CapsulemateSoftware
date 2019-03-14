@@ -4,25 +4,29 @@ PI_DISPENSER_CONFIG = [
         "servo_motor_top": 0,
         "servo_motor_cylinder": 8,
         "solenoid": 4,
-        "photoresistor": 17
+        "photoresistor": 17,
+        "servo_stop": 0
     },
     {
         "servo_motor_top": 2,
         "servo_motor_cylinder": 9,
         "solenoid": 18,
-        "photoresistor": 27
+        "photoresistor": 27,
+        "servo_stop": 0
     },
     {
         "servo_motor_top": 4,
         "servo_motor_cylinder": 10,
         "solenoid": 22,
-        "photoresistor": 23
+        "photoresistor": 23,
+        "servo_stop": 0.05
     },
     {
         "servo_motor_top": 6,
         "servo_motor_cylinder": 11,
         "solenoid": 24,
-        "photoresistor": 25
+        "photoresistor": 25,
+        "servo_stop": 0
     },
 ]
 

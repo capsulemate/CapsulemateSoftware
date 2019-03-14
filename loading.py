@@ -48,7 +48,7 @@ def load_pills(win, gpio, kit):
       storage.turn_cylinder(quadrants[storage_container], hole_size, kit)
       gui.change_instruction_text(win, "Please fill storage container {} with medicine {}".format(storage_container, medicine_name))
       gui.change_button_text(win, ["", "", "OK"])
-      print("waiting for button" + medicine_name)
+      #print("waiting for button" + medicine_name)
       interface.wait_for_button_press(gpio,win,"green_button") 
       create_schedule(quadrants[storage_container], dispense_times, pills_per_dose, kit, win, gpio)
   # loading done

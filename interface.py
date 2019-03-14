@@ -34,7 +34,7 @@ def pressed_button(gpio, win, button_colour, timeout):
 
 def pressed_red_button(gpio, win, quadrant, pills_per_dose, kit):
     timeout_start = time.time()
-    print("Waiting for button press")
+    #print("Waiting for button press")
     while time.time() < timeout_start + 3:
         if(gpio.input(PI_INTERFACE_CONFIG["red_button"]) == gpio.LOW):
             while time.time() < timeout_start + 3:
