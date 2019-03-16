@@ -1,10 +1,13 @@
 import json
+import os
 import schedule
 import time
 import storage
 import gui
 import interface
 from storage import Storage
+import wget
+import credentials
 
 
 #------------ function to create the sechedule
@@ -22,9 +25,16 @@ def load_pills(win, gpio, kit):
     Storage(3, gpio)
   ]
 
-  with open('templateTest.json') as template:
-    data = json.load(template)["Medicine"]
-    for med in data: 
+
+  output = "template.json"
+  if os.path.exists(output):
+      os.remove(output)
+  fs = wget.download(url=credentials.WEB_APP_URL)
+  with open(fs, 'r') as template:
+    data = json.load(template)
+    #data = json.load(data)
+    for m in data:
+      med = data[m]
       storage_container = med["StorageContainer"]
       medicine_name = med["Name"]
       hole_size = med["Size"]
@@ -38,12 +48,13 @@ def load_pills(win, gpio, kit):
       storage.turn_cylinder(quadrants[storage_container], hole_size, kit)
       gui.change_instruction_text(win, "Please fill storage container {} with medicine {}".format(storage_container, medicine_name))
       gui.change_button_text(win, ["", "", "OK"])
-      print("waiting for button" + medicine_name)
-      interface.wait_for_button_press(gpio,win) 
+      #print("waiting for button" + medicine_name)
+      interface.wait_for_button_press(gpio,win,"green_button") 
       create_schedule(quadrants[storage_container], dispense_times, pills_per_dose, kit, win, gpio)
   # loading done
   gui.change_instruction_text(win, "Loading Complete!")
+
   gui.change_button_text(win, ["", "", ""])
   time.sleep(3)
-  gui.change_instruction_text(win, "")
+  storage.next_run(win)
   return quadrants      

@@ -3,6 +3,8 @@ import time
 import loading
 import gui
 from piConfig import PI_INTERFACE_CONFIG
+import external
+import interface
 import RPi.GPIO as GPIO
 from adafruit_servokit import ServoKit
 
@@ -23,9 +25,12 @@ def main():
     win = gui.init_gui()
     gpio, kit = init_hardware()
     quadrants = loading.load_pills(win, gpio, kit)
+#     external.sendemail("tyurina.kumar@gmail.com", "Tylenol")
     while True:
       schedule.run_pending()
-      time.sleep(1)
+      gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
+      gui.change_button_text(win, ["Dispense", "", ""])
+      interface.pressed_red_button(gpio, win, quadrants[0], 1, kit)
       # need to run this every loop iteration
       gui.maintain_gui(win)
     

@@ -1,9 +1,10 @@
 # this class is so we can have objects for each of the storage containers with their associated servo_numbers ... ...
-# Additional things to add once we are done MVP:
-# -warning when pills are almost out, tell them to refill
 import schedule
 import time
 import gui
+import interface
+import external
+import datetime
 from piConfig import PI_DISPENSER_CONFIG, PI_CYLINDER_CONFIG 
 
 TOP_SERVO_SPEED = 0.25
@@ -23,7 +24,12 @@ class Storage:
     self.servo_motor_cylinder = PI_DISPENSER_CONFIG[storage_container]["servo_motor_cylinder"]
     self.solenoid = PI_DISPENSER_CONFIG[storage_container]["solenoid"]
     self.photoresistor = PI_DISPENSER_CONFIG[storage_container]["photoresistor"]
+    self.servo_stop = PI_DISPENSER_CONFIG[storage_container]["servo_stop"]
     gpio.setup(self.solenoid, gpio.OUT)
+
+  def is_pills_low(self):
+    return self.num_pills < 10
+    
     
         
 # ------------------METHODS -------------------------------------------------------------
@@ -50,14 +56,26 @@ def dispense(quadrant, pills_per_dose, kit, win, gpio):
         cancel_job()
       else:
        if quadrant.num_pills < NUM_LOW_ON_PILLS:
-         low_on_pills()
+           gui.change_instruction_text(win, " Medicine {} is running low, please refill".format(quadrant.med_name))
+           time.sleep(1)
     else:
        gui.change_instruction_text(win, "Photoresistor does not detect in quadrant {}".format(quadrant.storage_container))   
+  gui.change_instruction_text(win, "Dispensed {}, press button to acknowledge".format(quadrant.med_name))
+  kit.continuous_servo[quadrant.servo_motor_top].throttle = quadrant.servo_stop
+  interface.sound_buzzer(gpio)
+  gui.change_button_text(win, ["", "OK", ""]) 
+  acknowledgement(gpio, win, quadrant)
 
-    gui.change_instruction_text(win, "Dispensed {}...".format(quadrant.med_name))
-    kit.continuous_servo[quadrant.servo_motor_top].throttle = 0
-      # sound the buzzer 
-      # wait for button press for acknowledgement if they don't alert caregiver after certain time
+def next_run(win):
+      gui.change_instruction_text(win, "Next pill will be dispensed at {}".format(schedule.next_run()))
+
+def acknowledgement(gpio, win, quadrant):
+      # wait 5 min (300 seconds) for a button press
+      if not interface.pressed_button(gpio, win, "yellow_button", 10):
+        print("We are sending")
+        external.sendemail('tyurina.kumar@gmail.com', quadrant.med_name)
+        gui.change_instruction_text(win, "Contacted caregiver")
+        time.sleep(5)
 
 def dispense_single(quadrant, gpio):
   # power the correct solenoid to push
@@ -93,12 +111,6 @@ def photosensor_read(RCpin, gpio):
         reading += 1
     return reading
 
-def cancel_job(): 
-  # finish this function
-  # consult https://github.com/dbader/schedule/ for correct syntax for cancelling a job
-    schedule.CancelJob
-  # print message to screen that there is not enough pills
-
-def low_on_pills(): 
-  # function that warns when their is less than 10 pills
-  return True
+def cancel_job():
+  schedule.CancelJob()
+  
